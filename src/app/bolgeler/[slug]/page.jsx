@@ -1,4 +1,5 @@
 import { notFound } from "next/navigation";
+import Link from "next/link";    
 
 const siteUrl = "http://localhost:3000/"; // canlı alan adını yaz
 
@@ -13,7 +14,7 @@ const bolgelerData = {
 Yıllardır Batıkent bölgesinde edindiğimiz tecrübe sayesinde hızlı, güvenli ve garantili çözümler sunuyoruz. Doğalgaz tesisatı montajı, kombi değişimi, petek temizliği, gaz basınç ayarı ve resmi gaz açma işlemleri gibi hizmetlerimizle hem güvenliğinizi hem de cihazlarınızın verimliliğini artırıyoruz.
 
 Batıkent’te doğalgaz ile ilgili ihtiyaçlarınız için hemen bizimle iletişime geçebilir, 7/24 teknik destek alabilirsiniz.`,
-    hero: "/images/bolgeler/batikent.jpg",
+    hero: "/images/form-image.jpg",
     heroAlt: "Batıkent doğalgaz servisi kombi tamiri ve bakım ekibi"
   },
   cankaya: {
@@ -25,7 +26,7 @@ Batıkent’te doğalgaz ile ilgili ihtiyaçlarınız için hemen bizimle ileti�
 Başkentgaz standartlarına uygun tesisat montajı, kombi değişimi, petek temizliği ve gaz açma işlemleri ile hem güvenliğinizi hem de ısınma verimliliğinizi artırıyoruz. Yılların tecrübesiyle hızlı ve garantili çözümler sunuyoruz.
 
 Çankaya doğalgaz ihtiyaçlarınız için hemen bizi arayın, 7/24 teknik destek alın.`,
-  hero: "/images/bolgeler/cankaya.jpg",
+  hero: "/images/form-image.jpg",
   heroAlt: "Çankaya doğalgaz servisi kombi bakım ve tamir ekibi"
 },
 
@@ -38,7 +39,7 @@ kecioren: {
 Tesisat montajı, petek temizliği, gaz basınç ayarı ve resmi gaz açma işlemleri dahil tüm hizmetlerimizi Başkentgaz standartlarına uygun şekilde gerçekleştiriyoruz.
 
 Keçiören doğalgaz servisi ihtiyacınız olduğunda hemen arayın, hızlı ve güvenli çözümlerden yararlanın.`,
-  hero: "/images/bolgeler/kecioren.jpg",
+  hero: "/images/form-image.jpg",
   heroAlt: "Keçiören doğalgaz servisi kombi bakım ekibi"
 },
 
@@ -51,7 +52,7 @@ etimesgut: {
 Resmi Başkentgaz prosedürlerine uygun kombi montajı, petek temizliği, gaz basınç ayarı ve gaz açma hizmetleri ile güvenliğinizi ve ısınma performansınızı artırıyoruz.
 
 Etimesgut doğalgaz servisi olarak hızlı, güvenilir ve garantili çözümler için hemen bizi arayın.`,
-  hero: "/images/bolgeler/etimesgut.jpg",
+  hero: "/images/form-image.jpg",
   heroAlt: "Etimesgut doğalgaz servisi kombi onarım ekibi"
 },
 
@@ -64,7 +65,7 @@ yenimahalle: {
 Başkentgaz standartlarına uygun tesisat montajı, kombi değişimi, petek temizliği ve gaz açma hizmetleri ile hem güvenliğinizi hem de enerji verimliliğinizi artırıyoruz.
 
 Yenimahalle doğalgaz servisi için hemen bizimle iletişime geçin.`,
-  hero: "/images/bolgeler/yenimahalle.jpg",
+  hero: "/images/form-image.jpg",
   heroAlt: "Yenimahalle doğalgaz servisi kombi bakım ve tamir ekibi"
 },
 
@@ -77,20 +78,23 @@ mamak: {
 Başkentgaz prosedürlerine uygun olarak tesisat montajı, petek temizliği, gaz basınç ayarı ve gaz açma hizmetleri sunuyoruz.
 
 Mamak doğalgaz ihtiyaçlarınız için 7/24 teknik destek alabilirsiniz.`,
-  hero: "/images/bolgeler/mamak.jpg",
+  hero: "/images/form-image.jpg",
   heroAlt: "Mamak doğalgaz servisi kombi tamir ekibi"
 }
 
   // Yeni ilçeler buraya eklenebilir
 };
 
-export async function generateMetadata({ params }) {
-  const { slug } = await params; // ✅ önce await
+export function generateStaticParams() {
+  return Object.keys(bolgelerData).map((slug) => ({ slug }));
+}
+
+export function generateMetadata({ params }) {
+  const slug = params.slug; // ❗ await yok
   const b = bolgelerData[slug];
   if (!b) return { title: "Bölge bulunamadı | Doğalgaz Teknik" };
 
   const imageUrl = b.hero ? siteUrl + b.hero : undefined;
-
   return {
     title: `${b.title} | Doğalgaz Teknik`,
     description: b.description,
@@ -99,6 +103,8 @@ export async function generateMetadata({ params }) {
       description: b.description,
       url: `${siteUrl}/bolgeler/${slug}`,
       images: imageUrl ? [{ url: imageUrl }] : [],
+      locale: "tr_TR",
+      type: "article",
     },
     twitter: {
       card: "summary_large_image",
@@ -109,41 +115,57 @@ export async function generateMetadata({ params }) {
   };
 }
 
-export default async function BolgePage({ params }) {
-  const { slug } = await params; // ✅ burada da await
+export default function BolgePage({ params }) {
+  const slug = params.slug; // ❗ await yok
   const bolge = bolgelerData[slug];
   if (!bolge) return notFound();
 
   return (
-    <>
-      {/* HERO */}
-      <section
-        className="relative bg-cover bg-center"
-        style={{
-          backgroundImage: `url('${bolge.hero}')`,
-          minHeight: "calc(45vh - 64px)",
-        }}
-        aria-label={bolge.heroAlt || bolge.title}
-      >
-        <div className="absolute inset-0 bg-black/50 backdrop-blur-[2px]" />
-        <div className="relative max-w-6xl mx-auto px-6 py-16 flex items-end h-full">
-          <div>
-            <p className="text-sm text-white/80">Bölgeler</p>
-            <h1 className="text-3xl md:text-5xl font-bold text-white">
-              {bolge.title}
-            </h1>
-            <p className="mt-3 max-w-3xl text-white/90">{bolge.description}</p>
+    <div className="max-w-6xl mx-auto px-6 py-12 grid grid-cols-1 md:grid-cols-4 gap-8">
+      {/* İÇERİK — mobilde önce */}
+      <main className="md:col-span-3 order-1 md:order-none">
+        {/* HERO kart */}
+        <section
+          className="relative bg-cover bg-center rounded-lg overflow-hidden mb-8"
+          style={{ backgroundImage: `url('${bolge.hero}')`, minHeight: "250px" }}
+          aria-label={bolge.heroAlt || bolge.title}
+        >
+          <div className="absolute inset-0 bg-black/50" />
+          <div className="relative p-6 flex items-end h-full">
+            <div>
+              <p className="text-sm text-white/80">Bölgeler</p>
+              <h1 className="text-2xl md:text-4xl font-bold text-white">{bolge.title}</h1>
+              <p className="mt-3 text-white/90">{bolge.description}</p>
+            </div>
           </div>
-        </div>
-      </section>
+        </section>
 
-      {/* İÇERİK */}
-      <section className="max-w-4xl mx-auto px-6 py-12">
-        <h2 className="text-2xl font-bold mb-6">{bolge.title}</h2>
-        <p className="text-lg text-gray-700 leading-8 whitespace-pre-line">
+        {/* Metin */}
+        <h2 className="text-2xl font-bold text-gray-900 mb-4">{bolge.title}</h2>
+        <p className="text-lg text-gray-800 mb-6">{bolge.description}</p>
+        <div className="prose max-w-none text-gray-700 whitespace-pre-line leading-8">
           {bolge.content}
-        </p>
-      </section>
-    </>
+        </div>
+      </main>
+
+      {/* LİSTE — mobilde altta */}
+      <aside className="md:col-span-1 order-2 md:order-none">
+        <h3 className="text-lg font-semibold mb-3 text-white border rounded-2xl text-center bg-gray-900 p-3">Tüm Bölgeler</h3>
+        <ul className="border rounded-lg divide-y divide-gray-200 shadow-sm">
+          {Object.entries(bolgelerData).map(([key, item]) => (
+            <li key={key}>
+              <Link
+                href={`/bolgeler/${key}`}
+                className={`block px-4 py-3 hover:bg-gray-50 transition ${
+                  key === slug ? "bg-gray-100 font-semibold border-l-4 border-blue-500" : "text-gray-700"
+                }`}
+              >
+                {item.title}
+              </Link>
+            </li>
+          ))}
+        </ul>
+      </aside>
+    </div>
   );
 }

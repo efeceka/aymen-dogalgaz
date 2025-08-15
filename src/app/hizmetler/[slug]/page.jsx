@@ -1,4 +1,6 @@
 import { notFound } from "next/navigation";
+import Link from "next/link";            // ✅ EKLE
+
 
 const siteUrl = "https://www.siteniz.com"; // canlı alan adınla değiştir
 
@@ -107,76 +109,60 @@ Randevularınızı programınıza göre planlar, iş bitiminde tüm testleri yap
   },
 };
 
-export async function generateMetadata({ params }) {
-  const { slug } = await params; // ✅ her zaman await
-  const s = servicesData[slug];
-  if (!s) return { title: "Hizmet bulunamadı | Doğalgaz Teknik" };
-
-  const imageUrl = s.hero ? siteUrl + s.hero : undefined;
-  return {
-    title: `${s.title} | Doğalgaz Teknik`,
-    description: s.description,
-    openGraph: {
-      title: `${s.title} | Doğalgaz Teknik`,
-      description: s.description,
-      url: `${siteUrl}/hizmetler/${slug}`,
-      images: imageUrl ? [{ url: imageUrl }] : [],
-      locale: "tr_TR",
-      type: "article",
-    },
-    twitter: {
-      card: "summary_large_image",
-      title: `${s.title} | Doğalgaz Teknik`,
-      description: s.description,
-      images: imageUrl ? [imageUrl] : [],
-    },
-  };
-}
-
 export default async function ServicePage({ params }) {
-  const { slug } = await params; // ✅ her zaman await
+  const { slug } = await params;
   const service = servicesData[slug];
   if (!service) return notFound();
 
-
   return (
-    <>
-      {/* HERO */}
-      <section
-        className="relative bg-cover bg-center"
-        style={{ backgroundImage: `url('${service.hero || "/images/default.jpg"}')`, minHeight: "calc(45vh - 64px)" }}
-        aria-label={service.heroAlt || service.title}
-      >
-        <div className="absolute inset-0 bg-black/50 backdrop-blur-[2px]" />
-        <div className="relative max-w-6xl mx-auto px-6 py-16 flex items-end h-full">
-          <div>
-            <p className="text-sm text-white/80">Hizmetler</p>
-            <h1 className="text-3xl md:text-5xl font-bold text-white">{service.title}</h1>
-            <p className="mt-3 max-w-3xl text-white/90">{service.description}</p>
-          </div>
+    <div className="max-w-6xl mx-auto px-6 py-12 grid grid-cols-1 md:grid-cols-4 gap-8">
+  {/* SAĞ İÇERİK - Mobilde önce */}
+  <main className="md:col-span-3 order-1 md:order-none">
+    {/* HERO */}
+    <section
+      className="relative bg-cover bg-center rounded-lg overflow-hidden mb-8"
+      style={{
+        backgroundImage: `url('${service.hero}')`,
+        minHeight: "250px",
+      }}
+      aria-label={service.heroAlt || service.title}
+    >
+      <div className="absolute inset-0 bg-black/50" />
+      <div className="relative p-6 flex items-end h-full">
+        <div>
+          <p className="text-sm text-white/80">Hizmetler</p>
+          <h1 className="text-2xl md:text-4xl font-bold text-white">{service.title}</h1>
+          <p className="mt-3 text-white/90">{service.description}</p>
         </div>
-      </section>
+      </div>
+    </section>
 
-      {/* İÇERİK */}
-     <section className="max-w-4xl mx-auto px-6 py-12">
-  {/* Başlık en üstte */}
-  <h2 className="text-3xl md:text-4xl font-bold text-gray-900">
-    {service.title}
-  </h2>
+    {/* İÇERİK */}
+    <h2 className="text-2xl font-bold text-gray-900 mb-4">{service.title}</h2>
+    <p className="text-lg text-gray-800 mb-6">{service.description}</p>
+    <div className="prose max-w-none text-gray-700 whitespace-pre-line leading-8">
+      {service.content}
+    </div>
+  </main>
 
-  {/* Kısa açıklama */}
-  <p className="mt-3 text-lg text-gray-800">
-    {service.description}
-  </p>
-
-  {/* Ayırıcı çizgi (opsiyonel) */}
-  <div className="mt-6 h-px bg-gray-200" />
-
-  {/* Uzun içerik */}
-  <div className="mt-6 text-lg text-gray-700 leading-8 whitespace-pre-line">
-    {service.content}
-  </div>
-</section>
-    </>
+  {/* SOL LİSTE - Mobilde altta */}
+  <aside className="md:col-span-1 order-2 md:order-none">
+    <h3 className="text-lg font-semibold mb-3 text-white border rounded-xl p-3 text-center bg-gray-900">Tüm Hizmetler</h3>
+    <ul className="border rounded-lg divide-y divide-gray-200 shadow-sm">
+      {Object.entries(servicesData).map(([key, item]) => (
+        <li key={key}>
+          <Link
+            href={`/hizmetler/${key}`}
+            className={`block px-4 py-3 hover:bg-gray-50 transition ${
+              key === slug ? "bg-gray-100 font-semibold border-l-4 border-blue-500" : "text-gray-700"
+            }`}
+          >
+            {item.title}
+          </Link>
+        </li>
+      ))}
+    </ul>
+  </aside>
+</div>
   );
 }
