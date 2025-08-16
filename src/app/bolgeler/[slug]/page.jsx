@@ -89,8 +89,8 @@ export function generateStaticParams() {
   return Object.keys(bolgelerData).map((slug) => ({ slug }));
 }
 
-export function generateMetadata({ params }) {
-  const slug = params.slug; // ❗ await yok
+export async function generateMetadata({ params }) {
+  const { slug } = await params; 
   const b = bolgelerData[slug];
   if (!b) return { title: "Bölge bulunamadı | Doğalgaz Teknik" };
 
@@ -115,13 +115,14 @@ export function generateMetadata({ params }) {
   };
 }
 
-export default function BolgePage({ params }) {
-  const slug = params.slug; // ❗ await yok
+export default async function BolgePage({ params }) {
+  const { slug } = await params; 
   const bolge = bolgelerData[slug];
   if (!bolge) return notFound();
 
+
   return (
-    <div className="max-w-6xl mx-auto px-6 py-12 grid grid-cols-1 md:grid-cols-4 gap-8">
+    <div className="max-w-6xl mx-auto px-6 py-12 grid grid-cols-1 md:grid-cols-4 gap-8 pt-30">
       {/* İÇERİK — mobilde önce */}
       <main className="md:col-span-3 order-1 md:order-none">
         {/* HERO kart */}

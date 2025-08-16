@@ -60,7 +60,7 @@ export default function ContactPage() {
       />
 
       {/* HERO */}
-      <section className="relative bg-emerald-600 text-white">
+      <section className="relative bg-emerald-600 text-white pt-16">
         <div className="max-w-6xl mx-auto px-6 py-16 text-center">
           <h1 className="text-3xl md:text-5xl font-bold">İletişim</h1>
           <p className="mt-3 text-lg">
@@ -76,7 +76,7 @@ export default function ContactPage() {
           <h3 className="text-xl font-semibold text-gray-900">Telefon</h3>
           <p className="mt-2 text-gray-600">
             <a href={`tel:${business.phone}`} className="font-medium text-emerald-600">
-              {business.phone.replace("+90", "0")}
+              0507 260 45 52
             </a>
           </p>
         </div>

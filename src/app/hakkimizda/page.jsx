@@ -83,8 +83,8 @@ export default function AboutPage() {
 
       {/* HERO */}
       <section
-        className="relative bg-cover bg-center text-white"
-        style={{ backgroundImage: "url('/images/hero.jpg')", minHeight: "calc(45vh - 64px)" }}
+        className="relative bg-cover bg-center text-white pt-16"
+        style={{ backgroundImage: "url('/images/gaz-image.jpg')", minHeight: "calc(45vh - 64px)" }}
       >
         <div className="absolute inset-0 bg-black/50 backdrop-blur-[2px]" />
         <div className="relative max-w-6xl mx-auto px-6 py-16 flex items-end h-full">
@@ -180,7 +180,7 @@ export default function AboutPage() {
             { k: "10+ yıl", v: "Tecrübe" },
             { k: "7/24", v: "Acil Servis" },
             { k: "1000+", v: "Mutlu Müşteri" },
-            { k: "Faturalı", v: "Garantili İşçilik" },
+            { k: "Tecrübe", v: "Garantili İşçilik" },
           ].map((i) => (
             <div key={i.v} className="rounded-xl border border-gray-200 bg-white p-6 text-center">
               <div className="text-3xl font-bold text-gray-900">{i.k}</div>
@@ -228,7 +228,7 @@ export default function AboutPage() {
           </h3>
           <div className="mt-4 flex flex-col sm:flex-row gap-3 justify-center">
             <a href={`tel:${business.phone}`} className="px-5 py-3 rounded-lg bg-yellow-400 text-black font-semibold">
-              Telefon: {business.phone.replace("+90","0")}
+              Telefon: 0507 260 45 52
             </a>
             <a
               href={`https://wa.me/${business.phone.replace("+","")}`}

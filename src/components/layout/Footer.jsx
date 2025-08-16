@@ -3,7 +3,7 @@ export default function Footer() {
     <footer className="bg-gray-900 text-gray-300">
       <div className="max-w-6xl mx-auto px-6 py-12 grid md:grid-cols-3 gap-10 items-center">
         <div>
-          <h3 className="text-2xl font-bold text-white mb-4">Doğalgaz Teknik</h3>
+          <h3 className="text-2xl font-bold text-white mb-4">Aymen Doğalgaz</h3>
           <p className="text-sm leading-6">
             Ankara’nın her yerine doğalgaz tesisat, kombi tamiri ve gaz kaçağı hizmetleri. Güvenli, hızlı ve garantili çözümler.
           </p>
@@ -25,7 +25,7 @@ export default function Footer() {
       </div>
 
       <div className="border-t border-gray-700 py-4 text-center text-sm">
-        © {new Date().getFullYear()} Doğalgaz Teknik — Tüm Hakları Saklıdır.
+        © {new Date().getFullYear()} Aymen Doğalgaz — Tüm Hakları Saklıdır.
       </div>
     </footer>
   );

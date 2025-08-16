@@ -2,7 +2,7 @@
 export default function Hero() {
   return (
     <section
-      className="relative bg-cover bg-center text-white min-h-[calc(100vh-64px)]"
+      className="relative bg-cover bg-center text-white min-h-screen"
       style={{ backgroundImage: "url('/images/hero1.jpg')" }}
     >
       {/* Koyu overlay */}
@@ -12,7 +12,7 @@ export default function Hero() {
       <div className="relative z-10 max-w-4xl mx-auto text-center px-6 py-15">
         
         {/* Logo */}
-        <div className="flex justify-center mb-6">
+        <div className="flex justify-center mb-6 mt-12">
           <img
             src="/images/aymen-logo.png"
             alt="Aymen Doğalgaz Logo"
@@ -34,7 +34,7 @@ export default function Hero() {
             href="tel:+905551112233"
             className="bg-yellow-500 hover:bg-yellow-600 text-black font-semibold px-6 py-3 rounded-lg shadow-lg transition"
           >
-            📞 Hemen Arayın - 0555 111 22 33
+            📞 Hemen Arayın - 0507 260 45 52
           </a>
 
           {/* WhatsApp */}

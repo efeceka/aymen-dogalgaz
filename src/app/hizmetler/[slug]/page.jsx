@@ -109,13 +109,47 @@ Randevularınızı programınıza göre planlar, iş bitiminde tüm testleri yap
   },
 };
 
+// ✅ Metadata
+export async function generateMetadata({ params }) {
+  const { slug } = await params; // ❗ next canary’de await gerekiyor
+  const service = servicesData[slug];
+  if (!service) {
+    return {
+      title: "Hizmet bulunamadı | Doğalgaz Teknik",
+      description: "Aradığınız hizmet bulunamadı.",
+    };
+  }
+
+  const imageUrl = service.hero ? siteUrl + service.hero : undefined;
+
+  return {
+    title: `${service.title} | Doğalgaz Teknik`,
+    description: service.description,
+    openGraph: {
+      title: `${service.title} | Doğalgaz Teknik`,
+      description: service.description,
+      url: `${siteUrl}/hizmetler/${slug}`,
+      images: imageUrl ? [{ url: imageUrl, alt: service.heroAlt || service.title }] : [],
+      locale: "tr_TR",
+      type: "article",
+    },
+    twitter: {
+      card: "summary_large_image",
+      title: `${service.title} | Doğalgaz Teknik`,
+      description: service.description,
+      images: imageUrl ? [imageUrl] : [],
+    },
+  };
+}
+
+// ✅ Sayfa
 export default async function ServicePage({ params }) {
   const { slug } = await params;
   const service = servicesData[slug];
   if (!service) return notFound();
 
   return (
-    <div className="max-w-6xl mx-auto px-6 py-12 grid grid-cols-1 md:grid-cols-4 gap-8">
+    <div className="max-w-6xl mx-auto px-6 pt-30 py-12 grid grid-cols-1 md:grid-cols-4 gap-8">
   {/* SAĞ İÇERİK - Mobilde önce */}
   <main className="md:col-span-3 order-1 md:order-none">
     {/* HERO */}

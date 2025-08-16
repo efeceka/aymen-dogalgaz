@@ -50,7 +50,7 @@ export default function Header() {
   ];
 
   return (
-    <header className="bg-gray-900 text-white relative z-50">
+    <header className="fixed bg-gray-900 text-white inset-x-0 z-50">
       <div className="max-w-7xl mx-auto px-6 py-4 flex items-center justify-between relative font-bold">
        <Link href="/" className="flex items-center space-x-2">
         <img

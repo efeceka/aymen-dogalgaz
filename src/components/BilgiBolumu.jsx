@@ -32,7 +32,7 @@ export default function BilgiBolumu() {
                 "Kombi bakımı ve arıza onarımı",
                 "Demirdöküm kombi tamiri (yetkin ekip)",
                 "Ocak montajı ve kombi montajı",
-                "Batıkent kombi servisi • Batıkent tesisatçı",
+                "Batıkent kombi servisi",
               ].map((item) => (
                 <li key={item} className="flex items-start gap-3">
                   <span className="mt-1 inline-block h-2.5 w-2.5 rounded-full bg-emerald-500"></span>
@@ -60,7 +60,7 @@ export default function BilgiBolumu() {
                   href="tel:+905072604552"
                   className="flex-1 inline-flex items-center justify-center rounded-lg px-5 py-3 font-semibold bg-yellow-400 hover:bg-yellow-500 text-black transition shadow"
                 >
-                  📞 Hemen Arayın — 0507 260 45 52
+                  Hemen Arayın <br/> 0507 260 45 52
                 </a>
                 <a
                   href="https://wa.me/905072604552"
@@ -68,7 +68,7 @@ export default function BilgiBolumu() {
                   rel="noopener noreferrer"
                   className="flex-1 inline-flex items-center justify-center rounded-lg px-5 py-3 font-semibold bg-emerald-500 hover:bg-emerald-600 text-white transition shadow"
                 >
-                  💬 WhatsApp’tan Ulaşın
+                  💬 Mesaj Atın
                 </a>
               </div>
 
@@ -81,10 +81,10 @@ export default function BilgiBolumu() {
                   Usta Garantisi
                 </div>
                 <div className="rounded-lg border border-gray-200 p-3 bg-gray-50">
-                  Faturalı İşçilik
+                  Uzman İşçilik
                 </div>
                 <div className="rounded-lg border border-gray-200 p-3 bg-gray-50">
-                  Ankara Geneli
+                  Yetkin Tecrübe
                 </div>
               </div>
 
